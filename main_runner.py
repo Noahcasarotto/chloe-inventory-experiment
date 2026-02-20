@@ -38,8 +38,6 @@ if __name__ == "__main__":
                         help="Which runs: 'all', '0-80', '0,1,5,10', or '0-26,54-80'")
     parser.add_argument("--threads", type=int, default=0,
                         help="Gurobi threads per solve (0 = auto)")
-    parser.add_argument("--gap", type=float, default=0.005,
-                        help="MIP gap target (default 0.005 = 0.5%%)")
     parser.add_argument("--timelimit", type=int, default=2000,
                         help="Solver time limit per solve in seconds")
     parser.add_argument("--workers", type=int, default=1,
@@ -54,7 +52,7 @@ if __name__ == "__main__":
 
         print(f"Launching {len(chunks)} parallel workers for {len(run_ids)} runs")
         print(f"  Threads per worker: {threads_per_worker if threads_per_worker > 0 else 'auto'}")
-        print(f"  MIP Gap: {args.gap*100:.1f}%  |  Time Limit: {args.timelimit}s")
+        print(f"  MIP Gap: 0.5% (fixed)  |  Time Limit: {args.timelimit}s")
 
         procs = []
         for i, chunk in enumerate(chunks):
@@ -63,7 +61,6 @@ if __name__ == "__main__":
                 sys.executable, __file__,
                 "--runs", chunk_str,
                 "--threads", str(threads_per_worker),
-                "--gap", str(args.gap),
                 "--timelimit", str(args.timelimit),
                 "--workers", "1",
             ]
@@ -95,7 +92,7 @@ if __name__ == "__main__":
     print(f"   Timestamp: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"   Runs: {run_ids}")
     print(f"   Threads: {args.threads if args.threads > 0 else 'auto'}")
-    print(f"   MIP Gap: {args.gap*100:.1f}%  |  Time Limit: {args.timelimit}s")
+    print(f"   MIP Gap: 0.5% (fixed)  |  Time Limit: {args.timelimit}s")
     print("=" * 60)
 
     start_time = time.time()
@@ -104,7 +101,6 @@ if __name__ == "__main__":
         run_ids=run_ids,
         solver_config={
             'threads': args.threads,
-            'mip_gap': args.gap,
             'time_limit': args.timelimit,
         }
     )

@@ -46,7 +46,7 @@ def solve_inventory_model(name, demand_data, y_config, one_time_cost, params, in
     log_path = os.path.join(output_dir, f"{name}.log")
     m.setParam('LogFile', log_path)
 
-    m.setParam("MIPGap", params.get('mip_gap', 0.005))
+    m.setParam("MIPGap", 0.005)
     m.setParam("TimeLimit", params.get('time_limit', 2000))
     m.setParam("MIPFocus", 1)
 

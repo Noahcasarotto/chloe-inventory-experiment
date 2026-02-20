@@ -25,7 +25,6 @@ INSTANCE_NAME="gurobi-solver"
 MACHINE_TYPE="c2d-standard-32"   # 32 vCPUs, 128 GB RAM, ~$1.16/hr
 NUM_WORKERS=4                     # parallel worker processes
 THREADS_PER_WORKER=8              # Gurobi threads per worker (32 / 4 = 8)
-MIP_GAP=0.005                     # 0.5% gap (change to 0.01 for faster 1% gap)
 TIME_LIMIT=2000                   # seconds per solve
 RUNS="all"                        # "all" for 0-80, or "0-26" etc.
 
@@ -128,10 +127,10 @@ do_setup() {
 # ============================================================
 do_run() {
     echo "Starting experiment on VM..."
-    echo "  Runs: $RUNS  |  Workers: $NUM_WORKERS  |  Gap: $MIP_GAP"
+    echo "  Runs: $RUNS  |  Workers: $NUM_WORKERS  |  MIP Gap: 0.5% (fixed)"
 
     # Run inside tmux so it persists after SSH disconnect
-    gssh "tmux new-session -d -s experiment 'cd ~/experiment && python3 main_runner.py --runs $RUNS --workers $NUM_WORKERS --threads $((NUM_WORKERS * THREADS_PER_WORKER)) --gap $MIP_GAP --timelimit $TIME_LIMIT 2>&1 | tee Results/run_output.log; echo EXPERIMENT_COMPLETE'" || true
+    gssh "tmux new-session -d -s experiment 'cd ~/experiment && python3 main_runner.py --runs $RUNS --workers $NUM_WORKERS --threads $((NUM_WORKERS * THREADS_PER_WORKER)) --timelimit $TIME_LIMIT 2>&1 | tee Results/run_output.log; echo EXPERIMENT_COMPLETE'" || true
 
     echo ""
     echo "Experiment launched in background tmux session."
