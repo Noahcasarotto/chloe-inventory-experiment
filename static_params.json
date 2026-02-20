@@ -1,0 +1,27 @@
+{
+    "NUM_WAREHOUSES": 5,
+    "NUM_CUSTOMERS": 20,
+    "NUM_PARTS": 8,
+    "f_monthly": [
+        20833.33,
+        16666.67,
+        14583.33,
+        18333.33,
+        23083.33
+    ],
+    "closing_cost_per_site": 400000.0,
+    "v_k": [
+        5000.0,
+        20000.0,
+        2500.0,
+        15600.0,
+        3900.0,
+        45000.0,
+        7500.0,
+        12000.0
+    ],
+    "avg_speed_kph": 75.0,
+    "order_proc_time": 4.0,
+    "cost_per_km_out": 3.0,
+    "cost_per_km_in": 3.0
+}
